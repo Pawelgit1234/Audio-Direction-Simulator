@@ -143,11 +143,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\controllers\DynamicMovementController.cpp" />
+    <ClCompile Include="src\settings.cpp" />
+    <ClCompile Include="src\sounds\SoundEmitter.cpp" />
+    <ClCompile Include="src\sounds\SoundManager.cpp" />
+    <ClCompile Include="src\sounds\DynamicSpeaker.cpp" />
+    <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\controllers\DynamicMovementController.hpp" />
+    <ClInclude Include="src\settings.hpp" />
+    <ClInclude Include="src\sounds\SoundEmitter.hpp" />
+    <ClInclude Include="src\sounds\SoundManager.hpp" />
+    <ClInclude Include="src\sounds\DynamicSpeaker.hpp" />
+    <ClInclude Include="src\App.hpp" />
     <ClInclude Include="src\utils\Logger.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\dynamic.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

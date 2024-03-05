@@ -1,5 +1,9 @@
-﻿int main()
+﻿#include "App.hpp"
+
+int main()
 {
-    //Сейчас я в утилитах
+    ads::App app;
+    app.run();
+
     return 0;
 }
