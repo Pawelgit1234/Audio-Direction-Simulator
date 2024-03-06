@@ -4,12 +4,12 @@
 
 namespace ads
 {
-	namespace sound
+	namespace object
 	{
 		class DynamicSpeaker
 		{
 		public:
-			DynamicSpeaker();
+			DynamicSpeaker(unsigned short id);
 
 			void setX(short x) { x_ = x; }
 			void setY(short y) { y_ = y; }
@@ -22,6 +22,7 @@ namespace ads
 			unsigned short getSoundlevel() const { return sound_level_; }
 			unsigned short getRotationAngle() const { return rotation_angle_; }
 			unsigned short getSoundAngle() const { return sound_angle_; }
+			unsigned short getId() const { return id_; }
 
 		private:
 			short x_;
@@ -29,6 +30,8 @@ namespace ads
 			unsigned short sound_level_; // 1 - 100
 			unsigned short rotation_angle_; // 1 - 360
 			unsigned short sound_angle_; // 1 - 360
+			unsigned short id_;
+			char title[25];
 		};
 	}
 }

@@ -14,6 +14,8 @@ namespace ads
             }
 
             window_.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+            speaker_zone_.addDynamicSpeaker(1);
         }
 
         void App::run()
@@ -26,6 +28,16 @@ namespace ads
                 {
                     if (event.type == sf::Event::Closed)
                         window_.close();
+                }
+
+                window_.clear();
+
+                for (const auto& speaker : speaker_zone_.getDynamicSpeakers())
+                {
+                    sf::CircleShape circle(settings::OBJECT_SIZE / (speaker_zone_.getZoom() / 100.f));
+                    circle.setFillColor(sf::Color::Red);
+                    circle.setPosition(speaker.getX(), speaker.getY());
+                    window_.draw(circle);
                 }
 
                 window_.display();

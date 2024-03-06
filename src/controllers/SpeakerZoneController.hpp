@@ -4,8 +4,12 @@ namespace ads
 {
 	namespace controller
 	{
-		class DynamicMovementController
+		class SpeakerZoneController
 		{
+		public:
+
+		private:
+
 		};
 	}
 }

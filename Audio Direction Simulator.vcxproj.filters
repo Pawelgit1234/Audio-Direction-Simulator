@@ -24,7 +24,7 @@
     <ClCompile Include="src\window\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\sounds\DynamicSpeaker.cpp">
+    <ClCompile Include="src\objects\DynamicSpeaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\sounds\SoundManager.cpp">
@@ -53,7 +53,7 @@
     <ClInclude Include="src\window\App.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sounds\DynamicSpeaker.hpp">
+    <ClInclude Include="src\objects\DynamicSpeaker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\sounds\SoundManager.hpp">

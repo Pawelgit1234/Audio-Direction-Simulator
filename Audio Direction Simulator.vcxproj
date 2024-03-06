@@ -149,7 +149,7 @@
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\sounds\SoundEmitter.cpp" />
     <ClCompile Include="src\sounds\SoundManager.cpp" />
-    <ClCompile Include="src\sounds\DynamicSpeaker.cpp" />
+    <ClCompile Include="src\objects\DynamicSpeaker.cpp" />
     <ClCompile Include="src\window\App.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="src\settings.hpp" />
     <ClInclude Include="src\sounds\SoundEmitter.hpp" />
     <ClInclude Include="src\sounds\SoundManager.hpp" />
-    <ClInclude Include="src\sounds\DynamicSpeaker.hpp" />
+    <ClInclude Include="src\objects\DynamicSpeaker.hpp" />
     <ClInclude Include="src\window\App.hpp" />
     <ClInclude Include="src\utils\Logger.hpp" />
   </ItemGroup>
