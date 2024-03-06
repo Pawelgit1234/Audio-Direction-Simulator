@@ -1,8 +1,8 @@
-﻿#include "App.hpp"
+﻿#include "window/App.hpp"
 
 int main()
 {
-    ads::App app;
+    ads::window::App app;
     app.run();
 
     return 0;
