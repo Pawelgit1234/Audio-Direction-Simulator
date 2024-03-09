@@ -1,8 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
-#include "../settings.hpp"
 #include "../utils/Logger.hpp"
 #include "SpeakerMovementZone.hpp"
 #include "SequencerZone.hpp"
@@ -14,12 +11,11 @@ namespace ads
 		class App
 		{
 		public:
-			App();
+			App() = default;
 
 			void run();
 
 		private:
-			sf::RenderWindow window_;
 			SpeakerMovementZone speaker_zone_;
 			SequencerZone sequenser_zone_;
 		};

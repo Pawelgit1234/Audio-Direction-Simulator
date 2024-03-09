@@ -143,26 +143,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\window\SequencerZone.cpp" />
-    <ClCompile Include="src\window\SpeakerMovementZone.cpp" />
-    <ClCompile Include="src\controllers\DynamicMovementController.cpp" />
+    <ClCompile Include="src\windows\SequencerZone.cpp" />
+    <ClCompile Include="src\windows\SpeakerMovementZone.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\sounds\SoundEmitter.cpp" />
     <ClCompile Include="src\sounds\SoundManager.cpp" />
     <ClCompile Include="src\objects\DynamicSpeaker.cpp" />
-    <ClCompile Include="src\window\App.cpp" />
+    <ClCompile Include="src\windows\App.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\window\SequencerZone.hpp" />
-    <ClInclude Include="src\window\SpeakerMovementZone.hpp" />
-    <ClInclude Include="src\controllers\DynamicMovementController.hpp" />
+    <ClInclude Include="src\windows\SequencerZone.hpp" />
+    <ClInclude Include="src\windows\SpeakerMovementZone.hpp" />
     <ClInclude Include="src\settings.hpp" />
     <ClInclude Include="src\sounds\SoundEmitter.hpp" />
     <ClInclude Include="src\sounds\SoundManager.hpp" />
     <ClInclude Include="src\objects\DynamicSpeaker.hpp" />
-    <ClInclude Include="src\window\App.hpp" />
+    <ClInclude Include="src\windows\App.hpp" />
     <ClInclude Include="src\utils\Logger.hpp" />
   </ItemGroup>
   <ItemGroup>

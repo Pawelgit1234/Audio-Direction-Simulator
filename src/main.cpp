@@ -1,7 +1,6 @@
-﻿#include "window/App.hpp"
+﻿#include "windows/App.hpp"
 
-int main()
-{
+int main() {
     ads::window::App app;
     app.run();
 
