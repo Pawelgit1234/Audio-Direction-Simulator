@@ -57,24 +57,5 @@ namespace ads
 				}*/
 			}
 		}
-
-		void SpeakerMovementZone::run()
-		{
-			while (window_->isOpen())
-			{
-				window_->clear();
-				controll();
-
-				for (const auto& speaker : dynamic_speakers_)
-				{
-					sf::CircleShape circle(settings::OBJECT_SIZE / (zoom_ / 100.f));
-					circle.setFillColor(sf::Color::Red);
-					circle.setPosition(speaker.getX(), speaker.getY());
-					window_->draw(circle);
-				}
-
-				window_->display();
-			}
-		}
 	}
 }

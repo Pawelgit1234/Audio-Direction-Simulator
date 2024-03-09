@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include "../utils/Logger.hpp"
 #include "SpeakerMovementZone.hpp"
 #include "SequencerZone.hpp"

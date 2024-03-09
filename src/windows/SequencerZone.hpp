@@ -15,8 +15,6 @@ namespace ads
 		public:
 			SequencerZone();
 
-			void run();
-
 		private:
 			std::shared_ptr<sf::RenderWindow> window_;
 

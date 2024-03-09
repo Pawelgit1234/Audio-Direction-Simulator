@@ -20,8 +20,6 @@ namespace ads
 		public:
 			SpeakerMovementZone();
 
-			void run();
-
 			void addDynamicSpeaker(unsigned short id);
 			ads::object::DynamicSpeaker getDynamicSpeaker(unsigned short id);
 			void controll();
