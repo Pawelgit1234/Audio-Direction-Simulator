@@ -4,10 +4,12 @@
 
 #include <vector>
 #include <stdexcept>
+#include <cmath>
 
 #include "../settings.hpp"
 #include "../objects/DynamicSpeaker.hpp"
 #include "../utils/Logger.hpp"
+#include "../utils/Common.hpp"
 
 namespace ads
 {
@@ -30,7 +32,8 @@ namespace ads
 		private:
 			float zoom_;
 
-			std::shared_ptr<sf::RenderWindow> window_;
+			sf::RenderWindow window_;
+			sf::View view_;
 			std::vector<ads::object::DynamicSpeaker> dynamic_speakers_;
 
 			friend App;

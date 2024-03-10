@@ -5,17 +5,20 @@ namespace ads
 	namespace window
 	{
 		SpeakerMovementZone::SpeakerMovementZone()
-			: zoom_(settings::NORMAL_ZOOM),
-			window_(std::make_shared<sf::RenderWindow>(sf::VideoMode(settings::SPEAKER_MOVEMENT_ZONE_WIDTH, settings::SPEAKER_MOVEMENT_ZONE_HEIGHT), settings::WINDOW_NAME))
+			: zoom_(1.f),
+			window_(sf::VideoMode(settings::SPEAKER_MOVEMENT_ZONE_WIDTH, settings::SPEAKER_MOVEMENT_ZONE_HEIGHT), settings::WINDOW_NAME),
+			view_()
 		{
+			window_.setView(view_);
+
 			sf::Image icon;
 			if (!icon.loadFromFile(settings::ICON_PATH))
 			{
 				icon.create(32, 32, sf::Color(255, 255, 255));
-				ads::logger::log("Failed to load icon.", ads::logger::LoggerType::WARNING);
+				ads::utils::log("Failed to load icon.", ads::utils::LoggerType::WARNING);
 			}
 
-			window_->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+			window_.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 			addDynamicSpeaker(1);  // delete
 			addDynamicSpeaker(2);  // delete
@@ -33,28 +36,25 @@ namespace ads
 				if (s.getId() == id)
 					return s;
 
-			ads::logger::log("Dynamic speaker with the given id not found.", ads::logger::LoggerType::WARNING);
+			ads::utils::log("Dynamic speaker with the given id not found.", ads::utils::LoggerType::WARNING);
 			throw std::runtime_error("Dynamic speaker with the given id not found.");
 		}
 
 		void SpeakerMovementZone::controll()
 		{
+			
 			sf::Event event;
-			while (window_->pollEvent(event))
+			while (window_.pollEvent(event))
 			{
-				if (event.type == sf::Event::Closed)
-					window_->close();
-				else if (event.type == sf::Event::MouseWheelScrolled)
+				switch (event.type)
 				{
-					if (event.mouseWheelScroll.delta > 0 && zoom_ < 120.f)
-						zoom_ += 10;
-					else if (event.mouseWheelScroll.delta < 0 && zoom_ > 10.f)
-						zoom_ -= 10;
+				case sf::Event::Closed:
+					window_.close();
+					break;
+				case sf::Event::Resized:
+					utils::resizeView(window_, view_);
+					break;
 				}
-				/*else if ()
-				{
-
-				}*/
 			}
 		}
 	}

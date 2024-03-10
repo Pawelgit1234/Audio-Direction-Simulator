@@ -18,6 +18,9 @@ namespace ads
 			void run();
 
 		private:
+			void handleSpeakerMovementZone();
+			void handleSequenserZone();
+
 			SpeakerMovementZone speaker_zone_;
 			SequencerZone sequenser_zone_;
 		};

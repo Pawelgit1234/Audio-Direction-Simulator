@@ -7,7 +7,7 @@
 
 namespace ads
 {
-	namespace logger
+	namespace utils
 	{
 		enum class LoggerType
 		{

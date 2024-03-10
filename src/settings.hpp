@@ -10,7 +10,9 @@ namespace ads
 		const unsigned short SEQUENSER_ZONE_HEIGHT = 300;
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;
-		const float NORMAL_ZOOM = 50.f;
+
+		const float MIN_ZOOM = 2.f;
+		const float MAX_ZOOM = 10.f;
 
 		const float OBJECT_SIZE = 50.f;
 

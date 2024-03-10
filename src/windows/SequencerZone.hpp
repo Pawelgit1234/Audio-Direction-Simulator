@@ -16,7 +16,7 @@ namespace ads
 			SequencerZone();
 
 		private:
-			std::shared_ptr<sf::RenderWindow> window_;
+			sf::RenderWindow window_;
 
 			friend App;
 		};

@@ -2,7 +2,7 @@
 
 namespace ads
 {
-    namespace logger
+    namespace utils
     {
         void log(const std::string& msg, LoggerType log_type)
         {
