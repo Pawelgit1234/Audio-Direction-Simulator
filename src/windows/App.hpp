@@ -13,7 +13,7 @@ namespace ads
 		class App
 		{
 		public:
-			App() = default;
+			App();
 
 			void run();
 
@@ -21,6 +21,7 @@ namespace ads
 			void handleSpeakerMovementZone();
 			void handleSequenserZone();
 
+			sf::RenderWindow window_;
 			SpeakerMovementZone speaker_zone_;
 			SequencerZone sequenser_zone_;
 		};

@@ -16,7 +16,6 @@ namespace ads
 			SequencerZone();
 
 		private:
-			sf::RenderWindow window_;
 
 			friend App;
 		};

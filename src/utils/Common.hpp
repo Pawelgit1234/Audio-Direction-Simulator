@@ -8,6 +8,6 @@ namespace ads
 {
 	namespace utils
 	{
-		void resizeView(const sf::RenderWindow& window, sf::View& view);
+		
 	}
 }
