@@ -6,7 +6,6 @@ namespace ads
 	{
 		const unsigned short WINDOW_WIDTH = 1280;
 		const unsigned short WINDOW_HEIGHT = 720;
-		const unsigned short SEQUENSER_ZONE_WIDTH = 1280;
 		const unsigned short SEQUENSER_ZONE_HEIGHT = 300;
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;

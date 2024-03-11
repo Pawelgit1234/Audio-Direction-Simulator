@@ -28,55 +28,43 @@ namespace ads
 			throw std::runtime_error("Dynamic speaker with the given id not found.");
 		}
 
-		void SpeakerMovementZone::controll()
-		{
-			bool isDragging = false;
-			sf::Vector2f lastMousePosition;
-			
-			sf::Event event;
-			while (window_.pollEvent(event))
-			{
-				switch (event.type)
-				{
-				case sf::Event::Closed:
-					window_.close();
-					break;
-				case sf::Event::Resized:
-					view_.setSize(sf::Vector2f(event.size.width, event.size.height));
-					window_.setView(view_);
-					break;
-				case sf::Event::MouseWheelScrolled:
-					if (event.mouseWheelScroll.delta > 0)
-						view_.zoom(1.1f);
-					else if (event.mouseWheelScroll.delta < 0)
-						view_.zoom(0.9f);
+        void SpeakerMovementZone::controll()
+        {
+            sf::Vector2i lastMousePos = sf::Mouse::getPosition(window_);
+            sf::Event event;
+            while (window_.pollEvent(event))
+            {
+                switch (event.type)
+                {
+                case sf::Event::Closed:
+                    window_.close();
+                    break;
+                case sf::Event::Resized:
+                    view_.setSize(sf::Vector2f(event.size.width, event.size.height));
+                    window_.setView(view_);
+                    break;
+                case sf::Event::MouseWheelScrolled:
+                    if (event.mouseWheelScroll.delta > 0)
+                        view_.zoom(1.1f);
+                    else if (event.mouseWheelScroll.delta < 0)
+                        view_.zoom(0.9f);
 
-					window_.setView(view_);
-					break;
-				case sf::Event::MouseButtonPressed:
-					if (event.mouseButton.button == sf::Mouse::Left)
-					{
-						isDragging = true;
-						lastMousePosition = window_.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-					}
-					break;
-				case sf::Event::MouseMoved:
-					if (isDragging)
-					{
-						sf::Vector2f newMousePosition = window_.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
-						sf::Vector2f delta = (lastMousePosition - newMousePosition);
-						view_.move(delta);
-						lastMousePosition = newMousePosition;
-						window_.setView(view_);
-					}
-					break;
-				case sf::Event::MouseButtonReleased:
-					if (event.mouseButton.button == sf::Mouse::Left)
-						isDragging = false;
+                    window_.setView(view_);
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    {
+                        sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                        sf::Vector2i delta = mousePos - lastMousePos;
 
-					break;
-				}
-			}
-		}
+                        view_.move(-static_cast<float>(delta.x), -static_cast<float>(delta.y));
+                        window_.setView(view_);
+
+                        lastMousePos = mousePos;
+                    }
+                    break;
+                }
+            }
+        }
 	}
 }
