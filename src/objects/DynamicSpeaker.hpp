@@ -11,30 +11,28 @@ namespace ads
 		public:
 			DynamicSpeaker(unsigned short id);
 
-			void setX(float x) { x_ = x; }
-			void setY(float y) { y_ = y; }
+			void move(float offsetX, float offsetY) { circle_.setPosition(circle_.getPosition().x + offsetX, circle_.getPosition().y + offsetY); }
+			void setX(float x) { circle_.setPosition(x, circle_.getPosition().y); }
+			void setY(float y) { circle_.setPosition(circle_.getPosition().x, y); }
 			void setSoundlevel(unsigned short soundlevel) { sound_level_ = soundlevel; }
 			void setRotationAngle(unsigned short angle) { rotation_angle_ = angle; }
 			void setSoundAngle(unsigned short angle) { sound_angle_ = angle; }
 
-			float getX() const { return x_; }
-			float getY() const { return y_; }
+			float getX() const { return circle_.getPosition().x; }
+			float getY() const { return circle_.getPosition().y; }
 			unsigned short getSoundlevel() const { return sound_level_; }
 			unsigned short getRotationAngle() const { return rotation_angle_; }
 			unsigned short getSoundAngle() const { return sound_angle_; }
 			unsigned short getId() const { return id_; }
+			sf::CircleShape getCircle() const { return circle_; }
 
 		private:
-			float x_;
-			float y_;
 			unsigned short sound_level_; // 1 - 100
 			unsigned short rotation_angle_; // 1 - 360
 			unsigned short sound_angle_; // 1 - 360
 			unsigned short id_;
 			char title[25];
+			sf::CircleShape circle_;
 		};
 	}
 }
-
-
-

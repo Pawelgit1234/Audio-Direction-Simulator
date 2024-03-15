@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\Ear.cpp" />
     <ClCompile Include="src\utils\Common.cpp" />
     <ClCompile Include="src\windows\SequencerZone.cpp" />
     <ClCompile Include="src\windows\SpeakerMovementZone.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\Ear.hpp" />
     <ClInclude Include="src\utils\Common.hpp" />
     <ClInclude Include="src\windows\SequencerZone.hpp" />
     <ClInclude Include="src\windows\SpeakerMovementZone.hpp" />

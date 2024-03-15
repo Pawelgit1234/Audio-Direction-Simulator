@@ -1,4 +1,4 @@
-#include "SpeakerMovementZone.hpp"
+﻿#include "SpeakerMovementZone.hpp"
 
 namespace ads
 {
@@ -52,6 +52,43 @@ namespace ads
                     window_.setView(view_);
                     break;
                 case sf::Event::MouseButtonPressed:
+                    sf::Vector2f mousePos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_), view_);
+
+                    if (utils::isInsideCircle(sf::Vector2f(mousePos), ear_.getCircle()))
+                    {
+                        while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                        {
+                            sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                            sf::Vector2i delta = mousePos - lastMousePos;
+
+                            ear_.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                            window_.setView(view_);
+
+                            lastMousePos = mousePos;
+                        }
+
+                        break;
+                    }
+
+                    for (auto& speaker : dynamic_speakers_)
+                    {
+                        if (utils::isInsideCircle(sf::Vector2f(mousePos), speaker.getCircle()))
+                        {
+                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                sf::Vector2i delta = mousePos - lastMousePos;
+
+                                speaker.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                                window_.setView(view_);
+
+                                lastMousePos = mousePos;
+                            }
+                            
+                            break;
+                        }
+                    }
+
                     while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
                         sf::Vector2i mousePos = sf::Mouse::getPosition(window_);

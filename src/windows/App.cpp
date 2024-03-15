@@ -38,12 +38,9 @@ namespace ads
             speaker_zone_.controll();
 
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
-            {
-                sf::CircleShape circle(settings::OBJECT_SIZE);
-                circle.setFillColor(sf::Color::Red);
-                circle.setPosition(speaker.getX(), speaker.getY());
-                window_.draw(circle);
-            }
+                window_.draw(speaker.getCircle());
+
+            window_.draw(speaker_zone_.ear_.getCircle());
 
             window_.display();
         }
