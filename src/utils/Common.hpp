@@ -9,5 +9,6 @@ namespace ads
 	namespace utils
 	{
 		bool isInsideCircle(const sf::Vector2f& point, const sf::CircleShape& circle);
+		bool isInsideRectangle(const sf::Vector2f& point, const sf::RectangleShape& rect);
 	}
 }

@@ -24,6 +24,7 @@ namespace ads
 
             speaker_zone_.addDynamicSpeaker(1);  // delete
             speaker_zone_.addDynamicSpeaker(2);  // delete
+            speaker_zone_.addWall(1);  // delete
 
             while (window_.isOpen())
             {
@@ -39,6 +40,9 @@ namespace ads
 
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
                 window_.draw(speaker.getCircle());
+
+            for (const auto& wall : speaker_zone_.walls_)
+                window_.draw(wall.getRectangle());
 
             window_.draw(speaker_zone_.ear_.getCircle());
 

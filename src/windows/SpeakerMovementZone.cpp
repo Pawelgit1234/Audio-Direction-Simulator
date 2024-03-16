@@ -18,6 +18,12 @@ namespace ads
 			dynamic_speakers_.push_back(dynamic_speaker);
 		}
 
+        void SpeakerMovementZone::addWall(unsigned short id)
+        {
+            object::Wall wall(id);
+            walls_.push_back(wall);
+        }
+
 		ads::object::DynamicSpeaker SpeakerMovementZone::getDynamicSpeaker(unsigned short id)
 		{
 			for (const auto& s : dynamic_speakers_)
@@ -27,6 +33,16 @@ namespace ads
 			ads::utils::log("Dynamic speaker with the given id not found.", ads::utils::LoggerType::WARNING);
 			throw std::runtime_error("Dynamic speaker with the given id not found.");
 		}
+
+        ads::object::Wall SpeakerMovementZone::getWall(unsigned short id)
+        {
+            for (const auto& w : walls_)
+                if (w.getId() == id)
+                    return w;
+
+            ads::utils::log("Wall with the given id not found.", ads::utils::LoggerType::WARNING);
+            throw std::runtime_error("Wall with the given id not found.");
+        }
 
         void SpeakerMovementZone::controll()
         {
@@ -85,6 +101,25 @@ namespace ads
                                 lastMousePos = mousePos;
                             }
                             
+                            break;
+                        }
+                    }
+
+                    for (auto& wall : walls_)
+                    {
+                        if (utils::isInsideRectangle(sf::Vector2f(mousePos), wall.getRectangle()))
+                        {
+                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                sf::Vector2i delta = mousePos - lastMousePos;
+
+                                wall.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                                window_.setView(view_);
+
+                                lastMousePos = mousePos;
+                            }
+
                             break;
                         }
                     }

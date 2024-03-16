@@ -154,6 +154,7 @@
     <ClCompile Include="src\windows\App.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
+    <ClCompile Include="src\objects\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Ear.hpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="src\objects\DynamicSpeaker.hpp" />
     <ClInclude Include="src\windows\App.hpp" />
     <ClInclude Include="src\utils\Logger.hpp" />
+    <ClInclude Include="src\objects\Wall.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="img\dynamic.ico" />

@@ -25,5 +25,11 @@ namespace ads
 
             return inside;
 		}
+
+        bool isInsideRectangle(const sf::Vector2f& point, const sf::RectangleShape& rect)
+        {
+            sf::FloatRect frect = rect.getGlobalBounds();
+            return frect.contains(point);
+        }
 	}
 }
