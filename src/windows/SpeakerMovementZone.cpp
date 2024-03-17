@@ -72,6 +72,9 @@ namespace ads
 
                     if (utils::isInsideCircle(sf::Vector2f(mousePos), ear_.getCircle()))
                     {
+                        for (auto& speaker : dynamic_speakers_)
+                            speaker.updateRays();
+
                         while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                         {
                             sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
@@ -88,6 +91,7 @@ namespace ads
 
                     for (auto& speaker : dynamic_speakers_)
                     {
+                        speaker.updateRays();
                         if (utils::isInsideCircle(sf::Vector2f(mousePos), speaker.getCircle()))
                         {
                             while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -107,6 +111,9 @@ namespace ads
 
                     for (auto& wall : walls_)
                     {
+                        for (auto& speaker : dynamic_speakers_)
+                            speaker.updateRays();
+
                         if (utils::isInsideRectangle(sf::Vector2f(mousePos), wall.getRectangle()))
                         {
                             while (sf::Mouse::isButtonPressed(sf::Mouse::Left))

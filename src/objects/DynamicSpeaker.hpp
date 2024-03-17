@@ -1,5 +1,8 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "../settings.hpp"
 
 namespace ads
@@ -17,6 +20,7 @@ namespace ads
 			void setSoundlevel(unsigned short soundlevel) { sound_level_ = soundlevel; }
 			void setRotationAngle(unsigned short angle) { rotation_angle_ = angle; }
 			void setSoundAngle(unsigned short angle) { sound_angle_ = angle; }
+			void updateRays();
 
 			float getX() const { return circle_.getPosition().x; }
 			float getY() const { return circle_.getPosition().y; }
@@ -25,6 +29,7 @@ namespace ads
 			unsigned short getSoundAngle() const { return sound_angle_; }
 			unsigned short getId() const { return id_; }
 			sf::CircleShape getCircle() const { return circle_; }
+			const std::vector<sf::Vector2f>& getRayDirections() const { return rayDirections_; }
 
 		private:
 			unsigned short sound_level_; // 1 - 100
@@ -33,6 +38,7 @@ namespace ads
 			unsigned short id_;
 			char title[25];
 			sf::CircleShape circle_;
+			std::vector<sf::Vector2f> rayDirections_;
 		};
 	}
 }
