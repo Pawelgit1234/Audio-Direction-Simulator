@@ -1,10 +1,4 @@
-#include "Common.hpp"
-
-
-
-#include <iostream>
-
-
+﻿#include "Common.hpp"
 
 namespace ads
 {
@@ -32,47 +26,74 @@ namespace ads
             return frect.contains(point);
         }
 
-        bool rayIntersectsWall(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::RectangleShape& wall)
+        sf::Vector2f rayIntersectsWall(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::RectangleShape& wall)
         {
             sf::FloatRect wallBounds = wall.getGlobalBounds();
+            float wallLeft = wallBounds.left;
+            float wallTop = wallBounds.top;
+            float wallRight = wallLeft + wallBounds.width;
+            float wallBottom = wallTop + wallBounds.height;
 
-            if (rayOrigin.x < wallBounds.left || rayOrigin.x > wallBounds.left + wallBounds.width ||
-                rayOrigin.y < wallBounds.top || rayOrigin.y > wallBounds.top + wallBounds.height)
-                return false;
+            float rayX = rayOrigin.x;
+            float rayY = rayOrigin.y;
+            float rayDirX = rayDirection.x;
+            float rayDirY = rayDirection.y;
 
-            float tmin = (wallBounds.left - rayOrigin.x) / rayDirection.x;
-            float tmax = (wallBounds.left + wallBounds.width - rayOrigin.x) / rayDirection.x;
+            float tEnterX = (wallLeft - rayX) / rayDirX;
+            float tEnterY = (wallTop - rayY) / rayDirY;
+            float tExitX = (wallRight - rayX) / rayDirX;
+            float tExitY = (wallBottom - rayY) / rayDirY;
 
-            if (tmin > tmax) std::swap(tmin, tmax);
+            float tEnter = std::max(std::min(tEnterX, tExitX), std::min(tEnterY, tExitY));
+            float tExit = std::min(std::max(tEnterX, tExitX), std::max(tEnterY, tExitY));
 
-            float tymin = (wallBounds.top - rayOrigin.y) / rayDirection.y;
-            float tymax = (wallBounds.top + wallBounds.height - rayOrigin.y) / rayDirection.y;
+            if (tEnter < tExit && tExit >= 0) {
+                return sf::Vector2f(rayX + rayDirX * tEnter, rayY + rayDirY * tEnter);
+            }
 
-            if (tymin > tymax) std::swap(tymin, tymax);
-
-            if ((tmin > tymax) || (tymin > tmax))
-                return false;
-
-            return true;
+            return sf::Vector2f(0.f, 0.f);
         }
 
-        bool rayIntersectsEar(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::CircleShape& ear)
+        sf::Vector2f rayIntersectsCircle(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::CircleShape& circle)
         {
-            sf::Vector2f earCenter = ear.getPosition();
-            float earRadius = ear.getRadius();
+            sf::Vector2f circleCenter = circle.getPosition();
+            float circleRadius = circle.getRadius();
+            circleCenter.x += circleRadius;
+            circleCenter.y += circleRadius;
+            
 
-            sf::Vector2f rayToEar = earCenter - rayOrigin;
+            float rayX = rayOrigin.x;
+            float rayY = rayOrigin.y;
+            float rayDirX = rayDirection.x;
+            float rayDirY = rayDirection.y;
 
-            float projectionLength = rayToEar.x * rayDirection.x + rayToEar.y * rayDirection.y;
-            if (projectionLength < 0)
-                return false;
-     
-            sf::Vector2f intersectionPoint = rayOrigin + projectionLength * rayDirection;
+            float circleX = circleCenter.x;
+            float circleY = circleCenter.y;
 
-            float distanceToEarCenterSquared = std::pow(intersectionPoint.x - earCenter.x, 2) + std::pow(intersectionPoint.y - earCenter.y, 2);
-            float earRadiusSquared = std::pow(earRadius, 2);
+            float deltaX = rayX - circleX;
+            float deltaY = rayY - circleY;
 
-            return distanceToEarCenterSquared <= earRadiusSquared;
+            float a = rayDirX * rayDirX + rayDirY * rayDirY;
+            float b = 2.f * (deltaX * rayDirX + deltaY * rayDirY);
+            float c = deltaX * deltaX + deltaY * deltaY - circleRadius * circleRadius;
+
+            float discriminant = b * b - 4.f * a * c;
+
+            if (discriminant >= 0) {
+                float t = (-b - std::sqrt(discriminant)) / (2.f * a);
+                if (t >= 0) {
+                    return sf::Vector2f(rayX + rayDirX * t, rayY + rayDirY * t);
+                }
+            }
+
+            return sf::Vector2f(0.f, 0.f);
+        }
+
+        float distance(const sf::Vector2f& p1, const sf::Vector2f& p2)
+        {
+            float dx = p2.x - p1.x;
+            float dy = p2.y - p1.y;
+            return std::sqrt(dx * dx + dy * dy);
         }
 	}
 }

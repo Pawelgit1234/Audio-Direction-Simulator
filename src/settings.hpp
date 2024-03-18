@@ -13,11 +13,12 @@ namespace ads
 		const sf::Color DYNAMIC_SPEAKER_COLOR = sf::Color::Red;
 		const sf::Color EAR_COLOR = sf::Color::Green;
 		const sf::Color WALL_COLOR = sf::Color::White;
-		const sf::Color RAY_COLOR = sf::Color::White;
+		const sf::Color RAY_COLOR = sf::Color(211, 211, 211);
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;
-		const unsigned short RAY_COUNT = 500;
-		const float RAY_LENGHT = 2000.f;
+		const unsigned short NORMAL_SOUND_ANGLE = 50;
+		const unsigned short RAY_COUNT = 1000;
+		const float RAY_LENGTH = 2000.f;
 		const unsigned short FRAMERATE_LIMIT = 60;
 
 		const float DYNAMIC_SPEAKER_SIZE = 50.f;

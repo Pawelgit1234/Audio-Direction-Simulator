@@ -1,4 +1,4 @@
-#include "App.hpp"
+﻿#include "App.hpp"
 
 namespace ads
 {
@@ -44,17 +44,47 @@ namespace ads
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
             {
                 sf::Vector2f speakerPos = speaker.getCircle().getPosition();
-                speakerPos.x += 50;
-                speakerPos.y += 50;
+                speakerPos.x += speaker.getCircle().getRadius();
+                speakerPos.y += speaker.getCircle().getRadius();
+
                 for (const auto& direction : speaker.getRayDirections())
                 {
                     sf::VertexArray ray(sf::Lines, 2);
                     ray[0].position = speakerPos;
-                    ray[1].position = speakerPos + direction * settings::RAY_LENGHT;
+                    ray[1].position = speakerPos + direction * settings::RAY_LENGTH;
                     ray[0].color = settings::RAY_COLOR;
                     ray[1].color = settings::RAY_COLOR;
+
+                    sf::Vector2f intersectionPointEar;
+                    sf::Vector2f intersectionPointWall;
+
+                    intersectionPointEar = utils::rayIntersectsCircle(ray[0].position, direction, speaker_zone_.ear_.getCircle());
+
+                    for (const auto& wall : speaker_zone_.walls_)
+                    {
+                        intersectionPointWall = utils::rayIntersectsWall(ray[0].position, direction, wall.getRectangle());
+                        if (intersectionPointWall != sf::Vector2f(0.f, 0.f))
+                            break;
+                    }
+
+                    if (intersectionPointEar == sf::Vector2f(0.f, 0.f) && intersectionPointWall != sf::Vector2f(0.f, 0.f))
+                        ray[1].position = intersectionPointWall;
+                    else if (intersectionPointEar != sf::Vector2f(0.f, 0.f) && intersectionPointWall == sf::Vector2f(0.f, 0.f))
+                        ray[1].position = intersectionPointEar;
+                    else if (intersectionPointEar != sf::Vector2f(0.f, 0.f) && intersectionPointWall != sf::Vector2f(0.f, 0.f))
+                    {
+                        float earDistance = utils::distance(speaker.getCircle().getPosition(), intersectionPointEar);
+                        float wallDistance = utils::distance(speaker.getCircle().getPosition(), intersectionPointWall);
+
+                        if (earDistance < wallDistance)
+                            ray[1].position = intersectionPointEar;
+                        else
+                            ray[1].position = intersectionPointWall;
+                    }
+
                     window_.draw(ray);
                 }
+
                 window_.draw(speaker.getCircle());
             }
 
