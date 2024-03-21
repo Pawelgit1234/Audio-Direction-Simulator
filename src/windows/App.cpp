@@ -6,7 +6,7 @@ namespace ads
     {
         App::App()
             : window_(sf::VideoMode(settings::WINDOW_WIDTH, settings::WINDOW_HEIGHT), settings::WINDOW_NAME),
-            speaker_zone_(window_)
+            speaker_zone_(window_), sequenser_zone_(window_)
         {
             window_.setFramerateLimit(settings::FRAMERATE_LIMIT);
 
@@ -96,7 +96,8 @@ namespace ads
 
         void App::handleSequenserZone()
         {
-            
+            sequenser_zone_.update(speaker_zone_.zoom_);
+            window_.draw(sequenser_zone_.panel_);
         }
     }
 }

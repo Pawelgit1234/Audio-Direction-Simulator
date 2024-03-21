@@ -37,6 +37,7 @@ namespace ads
 			std::vector<ads::object::DynamicSpeaker> dynamic_speakers_;
 			std::vector<ads::object::Wall> walls_;
 			ads::object::Ear ear_;
+			float zoom_;
 
 			friend App;
 		};

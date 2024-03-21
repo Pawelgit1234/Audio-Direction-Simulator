@@ -47,9 +47,8 @@ namespace ads
             float tEnter = std::max(std::min(tEnterX, tExitX), std::min(tEnterY, tExitY));
             float tExit = std::min(std::max(tEnterX, tExitX), std::max(tEnterY, tExitY));
 
-            if (tEnter < tExit && tExit >= 0) {
+            if (tEnter < tExit && tExit >= 0)
                 return sf::Vector2f(rayX + rayDirX * tEnter, rayY + rayDirY * tEnter);
-            }
 
             return sf::Vector2f(0.f, 0.f);
         }

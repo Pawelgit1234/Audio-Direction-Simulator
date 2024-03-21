@@ -13,9 +13,13 @@ namespace ads
 		class SequencerZone
 		{
 		public:
-			SequencerZone();
+			SequencerZone(sf::RenderWindow& window);
+
+			void update(float zoom);
 
 		private:
+			sf::RectangleShape panel_;
+			sf::RenderWindow& window_;
 
 			friend App;
 		};

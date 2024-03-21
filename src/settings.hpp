@@ -6,14 +6,15 @@ namespace ads
 {
 	namespace settings
 	{
-		const unsigned short WINDOW_WIDTH = 1280;
-		const unsigned short WINDOW_HEIGHT = 720;
-		const unsigned short SEQUENSER_ZONE_HEIGHT = 300;
+		const unsigned short WINDOW_WIDTH = 1920;
+		const unsigned short WINDOW_HEIGHT = 1080;
+		const unsigned short SEQUENSER_ZONE_HEIGHT = 400;
 
 		const sf::Color DYNAMIC_SPEAKER_COLOR = sf::Color::Red;
 		const sf::Color EAR_COLOR = sf::Color::Green;
 		const sf::Color WALL_COLOR = sf::Color::White;
 		const sf::Color RAY_COLOR = sf::Color(211, 211, 211);
+		const sf::Color SEQUENSER_COLOR = sf::Color(50, 50, 50);
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;
 		const unsigned short NORMAL_SOUND_ANGLE = 50;

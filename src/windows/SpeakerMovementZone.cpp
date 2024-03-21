@@ -5,7 +5,7 @@ namespace ads
 	namespace window
 	{
 		SpeakerMovementZone::SpeakerMovementZone(sf::RenderWindow& window)
-			: window_(window)
+			: window_(window), zoom_(1.f)
 		{
 			view_.setSize(sf::Vector2f(settings::WINDOW_WIDTH, settings::WINDOW_HEIGHT));
 			view_.setCenter(sf::Vector2f(settings::WINDOW_WIDTH / 2.f, settings::WINDOW_HEIGHT / 2.f));
@@ -61,9 +61,15 @@ namespace ads
                     break;
                 case sf::Event::MouseWheelScrolled:
                     if (event.mouseWheelScroll.delta > 0)
+                    {
                         view_.zoom(1.1f);
+                        zoom_ *= 1.1f;
+                    }
                     else if (event.mouseWheelScroll.delta < 0)
+                    {
                         view_.zoom(0.9f);
+                        zoom_ *= 0.9f;
+                    }
 
                     window_.setView(view_);
                     break;
