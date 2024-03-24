@@ -39,7 +39,7 @@
     <ClCompile Include="src\windows\SpeakerMovementZone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\windows\SequencerZone.cpp">
+    <ClCompile Include="src\windows\TimeLineZone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\Common.cpp">
@@ -74,7 +74,7 @@
     <ClInclude Include="src\windows\SpeakerMovementZone.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\windows\SequencerZone.hpp">
+    <ClInclude Include="src\windows\TimeLineZone.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\Common.hpp">

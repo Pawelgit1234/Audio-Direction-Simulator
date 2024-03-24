@@ -10,10 +10,10 @@ namespace ads
 	{
 		class App;
 
-		class SequencerZone
+		class TimeLineZone
 		{
 		public:
-			SequencerZone(sf::RenderWindow& window);
+			TimeLineZone(sf::RenderWindow& window);
 
 			void update(float zoom);
 

@@ -26,7 +26,6 @@ namespace ads
 
 			void addDynamicSpeaker(unsigned short id);
 			void addWall(unsigned short id);
-			void controll();
 
 			ads::object::DynamicSpeaker getDynamicSpeaker(unsigned short id);
 			ads::object::Wall getWall(unsigned short id);

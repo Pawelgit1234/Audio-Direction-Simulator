@@ -31,16 +31,15 @@ namespace ads
             while (window_.isOpen())
             {
                 window_.clear();
+                controll();
                 handleSpeakerMovementZone();
-                handleSequenserZone();
+                handleTimeLineZone();
                 window_.display();
             }
         }
 
         void App::handleSpeakerMovementZone()
         {
-            speaker_zone_.controll();
-
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
             {
                 sf::Vector2f speakerPos = speaker.getCircle().getPosition();
@@ -82,6 +81,17 @@ namespace ads
                             ray[1].position = intersectionPointWall;
                     }
 
+                    if (direction.x > 0)
+                    {
+                        if (ray[1].position.x > speakerPos.x + direction.x * settings::RAY_LENGTH)
+                            ray[1].position = speakerPos + direction * settings::RAY_LENGTH;
+                    }
+                    else
+                    {
+                        if (ray[1].position.x < speakerPos.x + direction.x * settings::RAY_LENGTH)
+                            ray[1].position = speakerPos + direction * settings::RAY_LENGTH;
+                    }
+
                     window_.draw(ray);
                 }
 
@@ -94,10 +104,124 @@ namespace ads
             window_.draw(speaker_zone_.ear_.getCircle());
         }
 
-        void App::handleSequenserZone()
+        void App::handleTimeLineZone()
         {
             sequenser_zone_.update(speaker_zone_.zoom_);
             window_.draw(sequenser_zone_.panel_);
+        }
+
+        void App::controll()
+        {
+            sf::Vector2i lastMousePos = sf::Mouse::getPosition(window_);
+
+            sf::Event event;
+            while (window_.pollEvent(event))
+            {
+                switch (event.type)
+                {
+                case sf::Event::Closed:
+                    window_.close();
+                    break;
+                case sf::Event::Resized:
+                    speaker_zone_.view_.setSize(sf::Vector2f(event.size.width, event.size.height));
+                    window_.setView(speaker_zone_.view_);
+                    break;
+                case sf::Event::MouseWheelScrolled:
+                    if (event.mouseWheelScroll.delta > 0)
+                    {
+                        speaker_zone_.view_.zoom(1.1f);
+                        speaker_zone_.zoom_ *= 1.1f;
+                    }
+                    else if (event.mouseWheelScroll.delta < 0)
+                    {
+                        speaker_zone_.view_.zoom(0.9f);
+                        speaker_zone_.zoom_ *= 0.9f;
+                    }
+
+                    window_.setView(speaker_zone_.view_);
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    sf::Vector2f mousePos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_), speaker_zone_.view_);
+
+                    if (utils::isInsideRectangle(mousePos, sequenser_zone_.panel_))
+                    {
+                        
+                    }
+
+                    if (utils::isInsideCircle(sf::Vector2f(mousePos), speaker_zone_.ear_.getCircle()))
+                    {
+                        for (auto& speaker : speaker_zone_.dynamic_speakers_)
+                            speaker.updateRays();
+
+                        while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                        {
+                            sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                            sf::Vector2i delta = mousePos - lastMousePos;
+
+                            speaker_zone_.ear_.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                            window_.setView(speaker_zone_.view_);
+
+                            lastMousePos = mousePos;
+                        }
+
+                        break;
+                    }
+
+                    for (auto& speaker : speaker_zone_.dynamic_speakers_)
+                    {
+                        speaker.updateRays();
+                        if (utils::isInsideCircle(sf::Vector2f(mousePos), speaker.getCircle()))
+                        {
+                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                sf::Vector2i delta = mousePos - lastMousePos;
+
+                                speaker.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                                window_.setView(speaker_zone_.view_);
+
+                                lastMousePos = mousePos;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    for (auto& wall : speaker_zone_.walls_)
+                    {
+                        for (auto& speaker : speaker_zone_.dynamic_speakers_)
+                            speaker.updateRays();
+
+                        if (utils::isInsideRectangle(sf::Vector2f(mousePos), wall.getRectangle()))
+                        {
+                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                sf::Vector2i delta = mousePos - lastMousePos;
+
+                                wall.move(static_cast<float>(delta.x), static_cast<float>(delta.y));
+                                window_.setView(speaker_zone_.view_);
+
+                                lastMousePos = mousePos;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    {
+                        sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                        sf::Vector2i delta = mousePos - lastMousePos;
+
+                        speaker_zone_.view_.move(-static_cast<float>(delta.x), -static_cast<float>(delta.y));
+                        window_.setView(speaker_zone_.view_);
+
+                        lastMousePos = mousePos;
+                    }
+                    break;
+                }
+            }
         }
     }
 }
