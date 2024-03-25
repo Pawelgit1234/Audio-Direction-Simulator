@@ -4,7 +4,7 @@
 
 #include "../utils/Logger.hpp"
 #include "SpeakerMovementZone.hpp"
-#include "TimeLineZone.hpp"
+#include "TimelineZone.hpp"
 
 namespace ads
 {
@@ -24,7 +24,7 @@ namespace ads
 
 			sf::RenderWindow window_;
 			SpeakerMovementZone speaker_zone_;
-			TimeLineZone sequenser_zone_;
+			TimelineZone timeline_zone_;
 		};
 	}
 }

@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="src\objects\Ear.cpp" />
     <ClCompile Include="src\utils\Common.cpp" />
-    <ClCompile Include="src\windows\TimeLineZone.cpp" />
+    <ClCompile Include="src\windows\TimelineZone.cpp" />
     <ClCompile Include="src\windows\SpeakerMovementZone.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\sounds\SoundEmitter.cpp" />
@@ -155,11 +155,12 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
     <ClCompile Include="src\objects\Wall.cpp" />
+    <ClCompile Include="src\objects\TimelineBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Ear.hpp" />
     <ClInclude Include="src\utils\Common.hpp" />
-    <ClInclude Include="src\windows\TimeLineZone.hpp" />
+    <ClInclude Include="src\windows\TimelineZone.hpp" />
     <ClInclude Include="src\windows\SpeakerMovementZone.hpp" />
     <ClInclude Include="src\settings.hpp" />
     <ClInclude Include="src\sounds\SoundEmitter.hpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="src\windows\App.hpp" />
     <ClInclude Include="src\utils\Logger.hpp" />
     <ClInclude Include="src\objects\Wall.hpp" />
+    <ClInclude Include="src\objects\TimelineBar.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="img\dynamic.ico" />

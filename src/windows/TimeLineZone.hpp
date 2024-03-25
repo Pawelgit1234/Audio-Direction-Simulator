@@ -10,16 +10,22 @@ namespace ads
 	{
 		class App;
 
-		class TimeLineZone
+		class TimelineZone
 		{
 		public:
-			TimeLineZone(sf::RenderWindow& window);
+			TimelineZone(sf::RenderWindow& window);
 
-			void update(float zoom);
+			void updatePositionAtWindow(float zoom);
 
 		private:
+			sf::RectangleShape marker_;
 			sf::RectangleShape panel_;
 			sf::RenderWindow& window_;
+
+			float scale_;
+			float marker_pos_;
+			float timeline_pos_width_x_;
+			float timeline_pos_width_y_;
 
 			friend App;
 		};

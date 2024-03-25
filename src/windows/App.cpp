@@ -6,7 +6,7 @@ namespace ads
     {
         App::App()
             : window_(sf::VideoMode(settings::WINDOW_WIDTH, settings::WINDOW_HEIGHT), settings::WINDOW_NAME),
-            speaker_zone_(window_), sequenser_zone_(window_)
+            speaker_zone_(window_), timeline_zone_(window_)
         {
             window_.setFramerateLimit(settings::FRAMERATE_LIMIT);
 
@@ -106,8 +106,10 @@ namespace ads
 
         void App::handleTimeLineZone()
         {
-            sequenser_zone_.update(speaker_zone_.zoom_);
-            window_.draw(sequenser_zone_.panel_);
+            timeline_zone_.updatePositionAtWindow(speaker_zone_.zoom_);
+
+            window_.draw(timeline_zone_.panel_);
+            window_.draw(timeline_zone_.marker_);
         }
 
         void App::controll()
@@ -143,7 +145,7 @@ namespace ads
                 case sf::Event::MouseButtonPressed:
                     sf::Vector2f mousePos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_), speaker_zone_.view_);
 
-                    if (utils::isInsideRectangle(mousePos, sequenser_zone_.panel_))
+                    if (utils::isInsideRectangle(mousePos, timeline_zone_.panel_))
                     {
                         
                     }
