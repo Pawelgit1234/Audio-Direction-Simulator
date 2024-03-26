@@ -27,7 +27,8 @@ namespace ads
 		const float EAR_SIZE = 50.f;
 		const float WALL_WIDTH = 15.f;
 		const float WALL_HEIGHT = 150.f;
-		const float TIMELINE_MARKER_WIDTH = 5.f;
+		const float TIMELINE_MARKER_WIDTH = 10.f;
+		const float TIMELINE_MARKER_DRAGGING_DIVISOR = 1876.f;
 
 		extern const char* WINDOW_NAME;
 		extern const char* ICON_PATH;

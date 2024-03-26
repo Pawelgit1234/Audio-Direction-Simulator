@@ -129,25 +129,56 @@ namespace ads
                     window_.setView(speaker_zone_.view_);
                     break;
                 case sf::Event::MouseWheelScrolled:
-                    if (event.mouseWheelScroll.delta > 0)
-                    {
-                        speaker_zone_.view_.zoom(1.1f);
-                        speaker_zone_.zoom_ *= 1.1f;
-                    }
-                    else if (event.mouseWheelScroll.delta < 0)
-                    {
-                        speaker_zone_.view_.zoom(0.9f);
-                        speaker_zone_.zoom_ *= 0.9f;
-                    }
-
-                    window_.setView(speaker_zone_.view_);
-                    break;
-                case sf::Event::MouseButtonPressed:
+                {
                     sf::Vector2f mousePos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_), speaker_zone_.view_);
 
                     if (utils::isInsideRectangle(mousePos, timeline_zone_.panel_))
                     {
-                        
+                        if (event.mouseWheelScroll.delta > 0)
+                            timeline_zone_.moveTimelinePositionX(-20.f);
+                        else if (event.mouseWheelScroll.delta < 0)
+                            timeline_zone_.moveTimelinePositionX(20.f);
+                    }
+                    else
+                    {
+                        if (event.mouseWheelScroll.delta > 0)
+                        {
+                            speaker_zone_.view_.zoom(1.1f);
+                            speaker_zone_.zoom_ *= 1.1f;
+                        }
+                        else if (event.mouseWheelScroll.delta < 0)
+                        {
+                            speaker_zone_.view_.zoom(0.9f);
+                            speaker_zone_.zoom_ *= 0.9f;
+                        }
+                        window_.setView(speaker_zone_.view_);
+                    }
+                    break;
+                }
+                case sf::Event::MouseButtonPressed:
+                {
+                    sf::Vector2f mousePos = window_.mapPixelToCoords(sf::Mouse::getPosition(window_), speaker_zone_.view_);
+
+                    if (utils::isInsideRectangle(mousePos, timeline_zone_.panel_))
+                    {
+                        if (utils::isInsideRectangle(mousePos, timeline_zone_.marker_))
+                        {
+                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                sf::Vector2i delta = mousePos - lastMousePos;
+
+                                timeline_zone_.moveMarker(static_cast<float>(delta.x) / settings::TIMELINE_MARKER_DRAGGING_DIVISOR);
+                                window_.setView(speaker_zone_.view_);
+
+                                lastMousePos = mousePos;
+                                std::cout << timeline_zone_.marker_pos_ << std::endl;
+                            }
+
+                            break;
+                        }
+
+                        break;
                     }
 
                     if (utils::isInsideCircle(sf::Vector2f(mousePos), speaker_zone_.ear_.getCircle()))
@@ -222,6 +253,7 @@ namespace ads
                         lastMousePos = mousePos;
                     }
                     break;
+                }
                 }
             }
         }
