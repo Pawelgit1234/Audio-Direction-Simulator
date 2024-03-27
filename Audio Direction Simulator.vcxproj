@@ -156,6 +156,7 @@
     <ClCompile Include="src\utils\Logger.cpp" />
     <ClCompile Include="src\objects\Wall.cpp" />
     <ClCompile Include="src\objects\TimelineBar.cpp" />
+    <ClCompile Include="src\utils\TimelineTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\Ear.hpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\utils\Logger.hpp" />
     <ClInclude Include="src\objects\Wall.hpp" />
     <ClInclude Include="src\objects\TimelineBar.hpp" />
+    <ClInclude Include="src\utils\TimelineTimer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="img\dynamic.ico" />
