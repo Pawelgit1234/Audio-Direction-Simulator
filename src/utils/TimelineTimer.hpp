@@ -18,7 +18,9 @@ namespace ads
 			TimelineTimer();
 
 			std::string toString() const;
-			void convertTimeFromMarkerPosition(float marker_pos) const;
+			void convertTimeFromPosition(float pos) const;
+			float convertPositionFromTime(const std::string& time);
+			float convertPositionFromTime() const;
 		};
 	}
 }

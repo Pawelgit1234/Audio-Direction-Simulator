@@ -28,6 +28,10 @@ namespace ads
             speaker_zone_.addDynamicSpeaker(2);  // delete
             speaker_zone_.addWall(1);  // delete
 
+            timeline_zone_.addSpeakerBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 20), 1); // delete
+            timeline_zone_.addSpeakerBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 30), 2); // delete
+            timeline_zone_.addWallBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 40), 1); // delete
+
             while (window_.isOpen())
             {
                 window_.clear();
@@ -110,6 +114,11 @@ namespace ads
             timeline_zone_.updatePositionAtWindow(speaker_zone_.zoom_);
 
             window_.draw(timeline_zone_.panel_);
+
+            for (object::TimelineBar& bar : timeline_zone_.bars_)
+                for (const object::TimelineBarSlice& slice : bar.getSlices())
+                    window_.draw(const_cast<sf::RectangleShape&>(slice.rect_));
+
             window_.draw(timeline_zone_.marker_);
             window_.draw(timeline_zone_.time_panel_);
             window_.draw(timeline_zone_.time_text_);
@@ -137,10 +146,20 @@ namespace ads
 
                     if (utils::isInsideRectangle(mousePos, timeline_zone_.panel_))
                     {
-                        if (event.mouseWheelScroll.delta > 0)
-                            timeline_zone_.moveTimelinePositionX(-20.f);
-                        else if (event.mouseWheelScroll.delta < 0)
-                            timeline_zone_.moveTimelinePositionX(20.f);
+                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
+                        {
+                            if (event.mouseWheelScroll.delta > 0)
+                                timeline_zone_.timeline_pos_y_ -= 15;
+                            else if (event.mouseWheelScroll.delta < 0)
+                                timeline_zone_.timeline_pos_y_ += 15;
+                        }
+                        else
+                        {
+                            if (event.mouseWheelScroll.delta > 0)
+                                timeline_zone_.timeline_pos_x_ -= 20.f;
+                            else if (event.mouseWheelScroll.delta < 0)
+                                timeline_zone_.timeline_pos_x_ += 20.f;
+                        } 
                     }
                     else
                     {
@@ -171,7 +190,7 @@ namespace ads
                                 sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
                                 sf::Vector2i delta = mousePos - lastMousePos;
 
-                                timeline_zone_.moveMarker(static_cast<float>(delta.x) / settings::TIMELINE_MARKER_DRAGGING_EQUALIZER);
+                                timeline_zone_.marker_pos_ += static_cast<float>(delta.x) / settings::TIMELINE_MARKER_DRAGGING_EQUALIZER;
                                 window_.setView(speaker_zone_.view_);
 
                                 lastMousePos = mousePos;
@@ -179,6 +198,8 @@ namespace ads
 
                             break;
                         }
+                        
+
 
                         break;
                     }

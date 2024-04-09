@@ -2,9 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <vector>
+
 #include "../settings.hpp"
 #include "../utils/TimelineTimer.hpp"
 #include "../utils/Logger.hpp"
+#include "../objects/TimelineBar.hpp"
+#include "../objects/DynamicSpeaker.hpp"
+#include "../objects/Wall.hpp"
 
 namespace ads
 {
@@ -17,13 +22,11 @@ namespace ads
 		public:
 			TimelineZone(sf::RenderWindow& window);
 
+			void addSpeakerBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id);
+			void addWallBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id);
+
 			void updatePositionAtWindow(float zoom);
 			void updateTimeText();
-
-			void moveMarker(float x) { marker_pos_ += x; }
-			void moveTimelinePositionX(float x) { timeline_pos_x_ += x; }
-			void moveTimelinePositionY(float y) { timeline_pos_y_ += y; }
-			void moveTimelineScale(float scale) { scale_ += scale; }
 
 		private:
 			sf::RectangleShape marker_;
@@ -33,8 +36,8 @@ namespace ads
 			sf::RenderWindow& window_;
 
 			sf::Font font;
+			std::vector<object::TimelineBar> bars_;
 
-			float scale_;
 			float marker_pos_;
 			float timeline_pos_x_;
 			float timeline_pos_y_;

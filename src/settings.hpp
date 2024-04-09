@@ -17,6 +17,8 @@ namespace ads
 		const float WALL_HEIGHT = 150.f;
 		const float TIMELINE_MARKER_WIDTH = 10.f;
 		const unsigned short FONT_SIZE = 25;
+		const unsigned short TIMELINE_BAR_HEIGHT = 50;
+		const unsigned short TIMELINE_BAR_OUTLINE_THICKNESS = 3.f;
 
 		const sf::Color DYNAMIC_SPEAKER_COLOR = sf::Color::Red;
 		const sf::Color EAR_COLOR = sf::Color::Green;
@@ -26,6 +28,9 @@ namespace ads
 		const sf::Color TIMELINE_MARKER_COLOR = sf::Color(255, 127, 80);
 		const sf::Color TIME_PANEL_COLOR = sf::Color(80, 80, 80);
 		const sf::Color FONT_COLOR = sf::Color::White;
+		const sf::Color TIMELINE_SPEAKER_BAR_COLOR = sf::Color(179, 0, 0);
+		const sf::Color TIMELINE_WALL_BAR_COLOR = sf::Color(191, 191, 191);
+		const sf::Color TIMELINE_BAR_OUTLINE_COLOR = sf::Color(70, 70, 70);
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;
 		const unsigned short NORMAL_SOUND_ANGLE = 50;
@@ -33,7 +38,8 @@ namespace ads
 		const float RAY_LENGTH = 2000.f;
 		const unsigned short FRAMERATE_LIMIT = 60;
 		const float TIMELINE_MARKER_DRAGGING_EQUALIZER = 1876.f;
-		const float TOTAL_DURATION_SECONDS = 1000.f;
+		const float TOTAL_DURATION_SECONDS = 100.f;
+		const float BAR_SCALE_FACTOR = 2000.f;
 
 		extern const char* WINDOW_NAME;
 		extern const char* ICON_PATH;
