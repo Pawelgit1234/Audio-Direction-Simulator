@@ -28,6 +28,9 @@ namespace ads
 			void updatePositionAtWindow(float zoom);
 			void updateTimeText();
 
+			void moveSlice(float x, unsigned short id);
+			void cut(utils::TimelineTimer& pos);
+
 		private:
 			sf::RectangleShape marker_;
 			sf::RectangleShape panel_;
@@ -39,6 +42,7 @@ namespace ads
 			std::vector<object::TimelineBar> bars_;
 
 			float marker_pos_;
+			unsigned short latest_slice_id;
 			float timeline_pos_x_;
 			float timeline_pos_y_;
 			utils::TimelineTimer time_;

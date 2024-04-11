@@ -37,7 +37,7 @@ namespace ads
 		const unsigned short RAY_COUNT = 1000;
 		const float RAY_LENGTH = 2000.f;
 		const unsigned short FRAMERATE_LIMIT = 60;
-		const float TIMELINE_MARKER_DRAGGING_EQUALIZER = 1876.f;
+		const float TIMELINE_DRAGGING_EQUALIZER = 1876.f;
 		const float TOTAL_DURATION_SECONDS = 100.f;
 		const float BAR_SCALE_FACTOR = 2000.f;
 

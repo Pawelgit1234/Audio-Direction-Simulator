@@ -7,7 +7,7 @@ namespace ads
 		TimelineZone::TimelineZone(sf::RenderWindow& window)
 			: panel_(sf::Vector2f(settings::WINDOW_WIDTH, settings::TIMELINE_ZONE_HEIGHT)), marker_(sf::Vector2f(settings::TIMELINE_MARKER_WIDTH, settings::TIMELINE_ZONE_HEIGHT)),
 			window_(window), marker_pos_(0.f), timeline_pos_x_(0.f), timeline_pos_y_(0.f), is_running_(false),
-			time_panel_(sf::Vector2f(settings::TIME_PANEL_WIDTH, settings::TIME_PANEL_HEIGHT))
+			time_panel_(sf::Vector2f(settings::TIME_PANEL_WIDTH, settings::TIME_PANEL_HEIGHT)), latest_slice_id(1)
 		{
 			panel_.setFillColor(settings::TIMELINE_COLOR);
 			marker_.setFillColor(settings::TIMELINE_MARKER_COLOR);
@@ -24,14 +24,16 @@ namespace ads
 
 		void TimelineZone::addSpeakerBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id)
 		{
-			object::TimelineBar bar(start, end, object_id, bars_.size() + 1, false, font);
+			object::TimelineBar bar(start, end, object_id, bars_.size() + 1, latest_slice_id, false, font);
 			bars_.push_back(bar);
+			latest_slice_id++;
 		}
 
 		void TimelineZone::addWallBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id)
 		{
-			object::TimelineBar bar(start, end, object_id, bars_.size() + 1, true, font);
+			object::TimelineBar bar(start, end, object_id, bars_.size() + 1, latest_slice_id, true, font);
 			bars_.push_back(bar);
+			latest_slice_id++;
 		}
 
 		void TimelineZone::updatePositionAtWindow(float zoom)
@@ -82,6 +84,32 @@ namespace ads
 		{
 			time_.convertTimeFromPosition(marker_pos_);
 			time_text_.setString(time_.toString());
+		}
+
+		void TimelineZone::moveSlice(float x, unsigned short id)
+		{
+			for (object::TimelineBar& bar : bars_)
+			{
+				for (const object::TimelineBarSlice& slice : bar.getSlices())
+				{
+					if (slice.id_ == id)
+					{
+						utils::TimelineTimer timer;
+						timer.convertTimeFromPosition(x);
+						slice.start_.hours += timer.hours;
+						slice.start_.minutes += timer.minutes;
+						slice.start_.seconds += timer.seconds;
+						slice.end_.hours += timer.hours;
+						slice.end_.minutes += timer.minutes;
+						slice.end_.seconds += timer.seconds;
+						return;
+					}
+				}
+			}
+		}
+
+		void TimelineZone::cut(utils::TimelineTimer& pos)
+		{
 		}
 	}
 }

@@ -25,9 +25,7 @@ namespace ads
 		class TimelineBar
 		{
 		public:
-			TimelineBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id, unsigned short line, bool is_wall, sf::Font& font);
-
-			void cut(utils::TimelineTimer& pos);
+			TimelineBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id, unsigned short line, unsigned short first_slice_id, bool is_wall, sf::Font& font);
 
 			unsigned short getLine() const { return line_; }
 			const std::vector<TimelineBarSlice>& getSlices() const { return slices_; }

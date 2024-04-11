@@ -6,24 +6,20 @@ namespace ads
 	{
 		
 
-		TimelineBar::TimelineBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id, unsigned short line, bool is_wall, sf::Font& font)
+		TimelineBar::TimelineBar(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short object_id, unsigned short line, unsigned short first_slice_id, bool is_wall, sf::Font& font)
 			: start_(start), end_(end), object_id_(object_id), is_wall_(is_wall), font_(font), line_(line)
 		{
 			time_text_.setFont(font);
 			time_text_.setCharacterSize(settings::FONT_SIZE);
 			time_text_.setFillColor(settings::FONT_COLOR);
 
-			TimelineBarSlice slice(start, end, 1);
+			TimelineBarSlice slice(start, end, first_slice_id);
 			slices_.emplace_back(slice);
 
 			if (is_wall)
 				slices_[0].rect_.setFillColor(settings::TIMELINE_WALL_BAR_COLOR);
 			else	   
 				slices_[0].rect_.setFillColor(settings::TIMELINE_SPEAKER_BAR_COLOR);
-		}
-
-		void TimelineBar::cut(utils::TimelineTimer& pos)
-		{
 		}
 
 		float TimelineBarSlice::calculateWidth()

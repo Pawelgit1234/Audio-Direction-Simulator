@@ -51,6 +51,5 @@ namespace ads
 
             return pos;
         }
-
 	}
 }

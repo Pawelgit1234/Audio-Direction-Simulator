@@ -190,17 +190,35 @@ namespace ads
                                 sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
                                 sf::Vector2i delta = mousePos - lastMousePos;
 
-                                timeline_zone_.marker_pos_ += static_cast<float>(delta.x) / settings::TIMELINE_MARKER_DRAGGING_EQUALIZER;
-                                window_.setView(speaker_zone_.view_);
-
+                                timeline_zone_.marker_pos_ += static_cast<float>(delta.x) / settings::TIMELINE_DRAGGING_EQUALIZER;
                                 lastMousePos = mousePos;
                             }
 
                             break;
                         }
+                        else
+                        {
+                            for (object::TimelineBar& bar : timeline_zone_.bars_)
+                            {
+                                for (const object::TimelineBarSlice& slice : bar.getSlices())
+                                {
+                                    if (utils::isInsideRectangle(mousePos, slice.rect_))
+                                    {
+                                        sf::Vector2i mousePos;
+
+                                        while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                                            mousePos = sf::Mouse::getPosition(window_);
+
+                                        sf::Vector2i delta = mousePos - lastMousePos;
+                                        timeline_zone_.moveSlice(static_cast<float>(delta.x) / settings::TIMELINE_DRAGGING_EQUALIZER, slice.id_);
+                                        lastMousePos = mousePos;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
                         
-
-
                         break;
                     }
 
