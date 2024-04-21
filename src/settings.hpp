@@ -4,6 +4,11 @@
 
 namespace ads
 {
+	namespace utils
+	{
+		struct TimelineTimer;
+	}
+
 	namespace settings
 	{
 		const unsigned short WINDOW_WIDTH = 1920;
@@ -23,14 +28,17 @@ namespace ads
 		const sf::Color DYNAMIC_SPEAKER_COLOR = sf::Color::Red;
 		const sf::Color EAR_COLOR = sf::Color::Green;
 		const sf::Color WALL_COLOR = sf::Color::White;
-		const sf::Color RAY_COLOR = sf::Color(211, 211, 211, 50);
-		const sf::Color TIMELINE_COLOR = sf::Color(50, 50, 50);
-		const sf::Color TIMELINE_MARKER_COLOR = sf::Color(255, 127, 80);
-		const sf::Color TIME_PANEL_COLOR = sf::Color(80, 80, 80);
+		const sf::Color RAY_COLOR(211, 211, 211, 50);
+		const sf::Color TIMELINE_COLOR(50, 50, 50);
+		const sf::Color TIMELINE_MARKER_COLOR(255, 127, 80);
+		const sf::Color TIME_PANEL_COLOR(80, 80, 80);
 		const sf::Color FONT_COLOR = sf::Color::White;
-		const sf::Color TIMELINE_SPEAKER_BAR_COLOR = sf::Color(179, 0, 0);
-		const sf::Color TIMELINE_WALL_BAR_COLOR = sf::Color(191, 191, 191);
-		const sf::Color TIMELINE_BAR_OUTLINE_COLOR = sf::Color(70, 70, 70);
+		const sf::Color TIMELINE_SPEAKER_BAR_COLOR(179, 0, 0);
+		const sf::Color TIMELINE_WALL_BAR_COLOR(191, 191, 191);
+		const sf::Color TIMELINE_BAR_OUTLINE_COLOR(70, 70, 70);
+
+		const float TIMELINE_START = 0.f;
+		const float TIMELINE_END = 863.99f;
 
 		const unsigned short NORMAL_SOUND_LEVEL = 50;
 		const unsigned short NORMAL_SOUND_ANGLE = 50;
@@ -40,7 +48,7 @@ namespace ads
 		const float TIMELINE_DRAGGING_EQUALIZER = 1876.f;
 		const float TOTAL_DURATION_SECONDS = 100.f;
 		const float BAR_SCALE_FACTOR = 2000.f;
-
+		
 		extern const char* WINDOW_NAME;
 		extern const char* ICON_PATH;
 		extern const std::string FONT_PATH;

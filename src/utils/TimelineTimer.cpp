@@ -33,17 +33,6 @@ namespace ads
             seconds = static_cast<int>(timeSeconds) % 60;
         }
 
-        float TimelineTimer::convertPositionFromTime(const std::string& time)
-        {
-            int parsedHours, parsedMinutes, parsedSeconds;
-            if (sscanf_s(time.c_str(), "%d:%d:%d", &parsedHours, &parsedMinutes, &parsedSeconds) != 3)
-                return 0.0f;
-
-            float totalDurationSeconds = settings::TOTAL_DURATION_SECONDS;
-            float timeInSeconds = parsedHours * 3600 + parsedMinutes * 60 + parsedSeconds;
-            return timeInSeconds / totalDurationSeconds;
-        }
-
         float TimelineTimer::convertPositionFromTime() const
         {
             float currentTimeInSeconds = hours * 3600 + minutes * 60 + seconds;

@@ -20,6 +20,7 @@ namespace ads
 			void setSoundlevel(unsigned short soundlevel) { sound_level_ = soundlevel; }
 			void setRotationAngle(unsigned short angle) { rotation_angle_ = angle; }
 			void setSoundAngle(unsigned short angle) { sound_angle_ = angle; }
+			void setActive(bool active) { is_active_ = active; }
 			void updateRays();
 
 			float getX() const { return circle_.getPosition().x; }
@@ -28,6 +29,7 @@ namespace ads
 			unsigned short getRotationAngle() const { return rotation_angle_; }
 			unsigned short getSoundAngle() const { return sound_angle_; }
 			unsigned short getId() const { return id_; }
+			bool getActive() const { return is_active_; }
 			sf::CircleShape getCircle() const { return circle_; }
 			const std::vector<sf::Vector2f>& getRayDirections() const { return rayDirections_; }
 
@@ -39,6 +41,8 @@ namespace ads
 			char title[25];
 			sf::CircleShape circle_;
 			std::vector<sf::Vector2f> rayDirections_;
+
+			bool is_active_;
 		};
 	}
 }

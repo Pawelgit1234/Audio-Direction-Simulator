@@ -46,6 +46,9 @@ namespace ads
         {
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
             {
+                if (!speaker.getActive())
+                    continue;
+
                 sf::Vector2f speakerPos = speaker.getCircle().getPosition();
                 speakerPos.x += speaker.getCircle().getRadius();
                 speakerPos.y += speaker.getCircle().getRadius();
@@ -65,6 +68,9 @@ namespace ads
 
                     for (const auto& wall : speaker_zone_.walls_)
                     {
+                        if (!wall.getActive())
+                            continue;
+
                         intersectionPointWall = utils::rayIntersectsWall(ray[0].position, direction, wall.getRectangle());
                         if (intersectionPointWall != sf::Vector2f(0.f, 0.f))
                             break;
@@ -103,7 +109,12 @@ namespace ads
             }
 
             for (const auto& wall : speaker_zone_.walls_)
+            {
+                if (!wall.getActive())
+                    continue;
+
                 window_.draw(wall.getRectangle());
+            }
 
             window_.draw(speaker_zone_.ear_.getCircle());
         }
@@ -112,6 +123,34 @@ namespace ads
         {
             timeline_zone_.updateTimeText();
             timeline_zone_.updatePositionAtWindow(speaker_zone_.zoom_);
+            std::vector<unsigned short> lines = timeline_zone_.checkActive();
+
+            for (object::TimelineBar& bar : timeline_zone_.bars_)
+            {
+                bool isActive = false;
+                if (std::find(lines.begin(), lines.end(), bar.getLine()) == lines.end())
+                    isActive = true;
+
+                if (bar.isWall())
+                {
+                    auto wall = std::find_if(speaker_zone_.walls_.begin(), speaker_zone_.walls_.end(), [bar](const object::Wall& wall) {
+                        return wall.getId() == bar.getObjectId();
+                        });
+
+                    wall->setActive(isActive);
+                }
+                else
+                {
+                    auto speaker = std::find_if(speaker_zone_.dynamic_speakers_.begin(), speaker_zone_.dynamic_speakers_.end(), [bar](const object::DynamicSpeaker& speaker) {
+                        return speaker.getId() == bar.getObjectId();
+                        });
+
+                    speaker->setActive(isActive);
+                }
+            }
+
+            if (timeline_zone_.is_running_)
+                timeline_zone_.updateMarkerPosition();
 
             window_.draw(timeline_zone_.panel_);
 
@@ -123,6 +162,7 @@ namespace ads
             window_.draw(timeline_zone_.time_panel_);
             window_.draw(timeline_zone_.time_text_);
         }
+
 
         void App::controll()
         {
@@ -204,14 +244,23 @@ namespace ads
                                 {
                                     if (utils::isInsideRectangle(mousePos, slice.rect_))
                                     {
-                                        sf::Vector2i mousePos;
+                                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+                                        {
+                                            sf::Vector2i mousePos = sf::Mouse::getPosition(window_);
+                                            timeline_zone_.cut(static_cast<float>(mousePos.x), slice.id_);
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            sf::Vector2i mousePos;
+                                            while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                                                mousePos = sf::Mouse::getPosition(window_);
 
-                                        while (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                                            mousePos = sf::Mouse::getPosition(window_);
-
-                                        sf::Vector2i delta = mousePos - lastMousePos;
-                                        timeline_zone_.moveSlice(static_cast<float>(delta.x) / settings::TIMELINE_DRAGGING_EQUALIZER, slice.id_);
-                                        lastMousePos = mousePos;
+                                            sf::Vector2i delta = mousePos - lastMousePos;
+                                            timeline_zone_.moveSlice(static_cast<float>(delta.x) / settings::TIMELINE_DRAGGING_EQUALIZER, slice.id_);
+                                            lastMousePos = mousePos;
+                                            return;
+                                        }
                                     }
                                 }
                             }
@@ -297,8 +346,7 @@ namespace ads
                 }
                 case sf::Event::KeyPressed:
                     if (event.key.code == sf::Keyboard::Space)
-                        timeline_zone_.is_running_ == !timeline_zone_.is_running_;
-
+                        timeline_zone_.is_running_ = !timeline_zone_.is_running_;
                     break;
                 }
             }

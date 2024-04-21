@@ -27,9 +27,11 @@ namespace ads
 
 			void updatePositionAtWindow(float zoom);
 			void updateTimeText();
+			void updateMarkerPosition();
+			std::vector<unsigned short> checkActive();
 
 			void moveSlice(float x, unsigned short id);
-			void cut(utils::TimelineTimer& pos);
+			void cut(float pos, unsigned short id);
 
 		private:
 			sf::RectangleShape marker_;

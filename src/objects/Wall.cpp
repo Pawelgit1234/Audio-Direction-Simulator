@@ -8,7 +8,7 @@ namespace ads
 	namespace object
 	{
 		Wall::Wall(unsigned short id)
-			: rotation_angle_(0), id_(id), rect_(sf::Vector2f(settings::WALL_WIDTH, settings::WALL_HEIGHT))
+			: rotation_angle_(0), id_(id), rect_(sf::Vector2f(settings::WALL_WIDTH, settings::WALL_HEIGHT)), is_active_(false)
 
 		{
 			rect_.setFillColor(settings::WALL_COLOR);

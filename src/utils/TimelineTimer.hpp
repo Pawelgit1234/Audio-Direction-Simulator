@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <string>
 
@@ -19,7 +19,6 @@ namespace ads
 
 			std::string toString() const;
 			void convertTimeFromPosition(float pos) const;
-			float convertPositionFromTime(const std::string& time);
 			float convertPositionFromTime() const;
 		};
 	}

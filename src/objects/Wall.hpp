@@ -15,18 +15,22 @@ namespace ads
 			void setX(float x) { rect_.setPosition(x, rect_.getPosition().y); }
 			void setY(float y) { rect_.setPosition(rect_.getPosition().x, y); }
 			void setRotationAngle(unsigned short angle) { rotation_angle_ = angle; }
+			void setActive(bool active) { is_active_ = active; }
 
 			float getX() const { return rect_.getPosition().x; }
 			float getY() const { return rect_.getPosition().y; }
 			unsigned short getRotationAngle() const { return rotation_angle_; }
 			unsigned short getId() const { return id_; }
 			sf::RectangleShape getRectangle() const { return rect_; }
+			bool getActive() const { return is_active_; }
 
 		private:
 			sf::RectangleShape rect_;
 			unsigned short rotation_angle_; // 1 - 360
 			unsigned short id_;
 			char title[25];
+
+			bool is_active_;
 		};
 	}
 }

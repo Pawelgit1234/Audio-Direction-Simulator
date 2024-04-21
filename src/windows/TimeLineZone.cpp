@@ -86,6 +86,44 @@ namespace ads
 			time_text_.setString(time_.toString());
 		}
 
+		void TimelineZone::updateMarkerPosition()
+		{
+			static sf::Clock clock;
+			static float previousTime = 0.f;
+
+			float currentTime = clock.getElapsedTime().asSeconds();
+			if (currentTime - previousTime >= 1.f)
+			{
+				utils::TimelineTimer timer(0, 0, 1);
+				marker_pos_ += timer.convertPositionFromTime();
+				updateTimeText();
+				previousTime = currentTime;
+			}
+		}
+
+		std::vector<unsigned short> TimelineZone::checkActive()
+		{
+			std::vector<unsigned short> result;
+
+			for (object::TimelineBar& bar : bars_)
+			{
+				bool in_slice = false;
+				for (const object::TimelineBarSlice& slice : bar.getSlices())
+				{
+					if (slice.start_.convertPositionFromTime() < marker_pos_ && marker_pos_ < slice.end_.convertPositionFromTime())
+					{
+						in_slice = true;
+						break;
+					}
+				}
+
+				if (!in_slice)
+					result.push_back(bar.getLine());
+			}
+
+			return result;
+		}
+
 		void TimelineZone::moveSlice(float x, unsigned short id)
 		{
 			for (object::TimelineBar& bar : bars_)
@@ -108,8 +146,26 @@ namespace ads
 			}
 		}
 
-		void TimelineZone::cut(utils::TimelineTimer& pos)
+		void TimelineZone::cut(float pos, unsigned short id)
 		{
+			utils::TimelineTimer cut_timer;
+			cut_timer.convertTimeFromPosition((pos - timeline_pos_x_) / settings::TIMELINE_DRAGGING_EQUALIZER);
+
+			for (object::TimelineBar& bar : bars_)
+			{
+				for (const object::TimelineBarSlice& slice : bar.getSlices())
+				{
+					if (slice.id_ == id)
+					{
+						latest_slice_id++;
+
+						object::TimelineBarSlice newSlice(cut_timer, slice.end_, latest_slice_id, bar.isWall());
+						const_cast<object::TimelineBarSlice&>(slice).end_ = cut_timer;
+						bar.addSlice(newSlice);
+						return;
+					}
+				}
+			}
 		}
 	}
 }
