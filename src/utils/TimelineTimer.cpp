@@ -24,7 +24,7 @@ namespace ads
             return timeStr;
         }
 
-        void TimelineTimer::convertTimeFromPosition(float pos) const
+        void TimelineTimer::convertTimeFromPosition(float pos)
         {
             float timeSeconds = pos * settings::TOTAL_DURATION_SECONDS;
 
@@ -39,6 +39,53 @@ namespace ads
             float pos = currentTimeInSeconds / settings::TOTAL_DURATION_SECONDS;
 
             return pos;
+        }
+
+        unsigned short TimelineTimer::getSecondsSum() const
+        {
+            return seconds + minutes * 60 + hours * 3600;
+        }
+
+        TimelineTimer TimelineTimer::operator+(const TimelineTimer& other) const
+        {
+            TimelineTimer result;
+            result.hours = this->hours + other.hours;
+            result.minutes = this->minutes + other.minutes;
+            result.seconds = this->seconds + other.seconds;
+
+            if (result.seconds >= 60)
+            {
+                result.minutes += result.seconds / 60;
+                result.seconds %= 60;
+            }
+            if (result.minutes >= 60)
+            {
+                result.hours += result.minutes / 60;
+                result.minutes %= 60;
+            }
+
+            return result;
+        }
+
+        TimelineTimer TimelineTimer::operator-(const TimelineTimer& other) const
+        {
+            TimelineTimer result;
+            result.hours = this->hours - other.hours;
+            result.minutes = this->minutes - other.minutes;
+            result.seconds = this->seconds - other.seconds;
+
+            if (result.seconds < 0)
+            {
+                result.minutes -= 1;
+                result.seconds += 60;
+            }
+            if (result.minutes < 0)
+            {
+                result.hours -= 1;
+                result.minutes += 60;
+            }
+
+            return result;
         }
 	}
 }

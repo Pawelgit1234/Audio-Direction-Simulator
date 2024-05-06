@@ -24,14 +24,7 @@ namespace ads
         {
             ads::utils::log("Program started.", ads::utils::LoggerType::INFO);
 
-            speaker_zone_.addDynamicSpeaker(1);  // delete
-            speaker_zone_.addDynamicSpeaker(2);  // delete
-            speaker_zone_.addWall(1);  // delete
-
-            timeline_zone_.addSpeakerBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 20), 1); // delete
-            timeline_zone_.addSpeakerBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 30), 2); // delete
-            timeline_zone_.addWallBar(utils::TimelineTimer(0, 0, 10), utils::TimelineTimer(0, 0, 40), 1); // delete
-
+            addSpeakers();
             while (window_.isOpen())
             {
                 window_.clear();
@@ -46,8 +39,13 @@ namespace ads
         {
             for (const auto& speaker : speaker_zone_.dynamic_speakers_)
             {
+                unsigned short ray_count = 0;
+
                 if (!speaker.getActive())
+                {
+                    sound_manager_.stopSound(speaker.getId());
                     continue;
+                }
 
                 sf::Vector2f speakerPos = speaker.getCircle().getPosition();
                 speakerPos.x += speaker.getCircle().getRadius();
@@ -79,7 +77,10 @@ namespace ads
                     if (intersectionPointEar == sf::Vector2f(0.f, 0.f) && intersectionPointWall != sf::Vector2f(0.f, 0.f))
                         ray[1].position = intersectionPointWall;
                     else if (intersectionPointEar != sf::Vector2f(0.f, 0.f) && intersectionPointWall == sf::Vector2f(0.f, 0.f))
+                    {
                         ray[1].position = intersectionPointEar;
+                        ray_count++;
+                    }
                     else if (intersectionPointEar != sf::Vector2f(0.f, 0.f) && intersectionPointWall != sf::Vector2f(0.f, 0.f))
                     {
                         float earDistance = utils::distance(speaker.getCircle().getPosition(), intersectionPointEar);
@@ -103,6 +104,42 @@ namespace ads
                     }
 
                     window_.draw(ray);
+                }
+
+                bool wasSoundPlayed = sound_manager_.isSoundPlaying(speaker.getId());
+                
+                if (speaker.getActive() && ray_count > 0 && timeline_zone_.is_running_)
+                {
+                    utils::TimelineTimer play_timer;
+
+                    for (const auto& bar : timeline_zone_.bars_)
+                    {
+                        if (bar.isWall())
+                            continue;
+
+                        if (bar.getObjectId() == speaker.getId())
+                        {
+                            for (const auto& slice : bar.getSlices())
+                            {
+                                if (slice.start_.convertPositionFromTime() < timeline_zone_.marker_pos_ && timeline_zone_.marker_pos_ < slice.end_.convertPositionFromTime())
+                                {
+                                    play_timer = slice.sound_start_;
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!wasSoundPlayed)
+                        sound_manager_.playSound(speaker.getId(), speaker.getSoundLevel(), (float)ray_count / (settings::RAY_COUNT / 2), play_timer);
+                    else
+                        sound_manager_.setVolume(speaker.getId(), speaker.getSoundLevel(), (float)ray_count / (settings::RAY_COUNT / 2));
+                }
+                else
+                {
+                    if (wasSoundPlayed)
+                        sound_manager_.stopSound(speaker.getId());
                 }
 
                 window_.draw(speaker.getCircle());
@@ -286,7 +323,6 @@ namespace ads
 
                             lastMousePos = mousePos;
                         }
-
                         break;
                     }
 
@@ -351,5 +387,19 @@ namespace ads
                 }
             }
         }
-    }
+
+        void App::addSpeakers()
+        {
+            for (const auto& entry : std::filesystem::directory_iterator(settings::SPEAKERS_PATH))
+            {
+                if (entry.is_regular_file() && utils::endsWith(entry.path().filename().string(), ".wav"))
+                {
+                    unsigned short id = speaker_zone_.dynamic_speakers_.size() + 1;
+                    speaker_zone_.addDynamicSpeaker(id);
+                    sound_manager_.loadSound(id, entry.path().string());
+                    timeline_zone_.addSpeakerBar(utils::TimelineTimer(0, 0, 0), sound_manager_.getSoundLenght(id), id);
+                }
+            }
+        }
+    } 
 }

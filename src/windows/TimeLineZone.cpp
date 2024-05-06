@@ -159,8 +159,12 @@ namespace ads
 					{
 						latest_slice_id++;
 
-						object::TimelineBarSlice newSlice(cut_timer, slice.end_, latest_slice_id, bar.isWall());
+						utils::TimelineTimer new_sound_start = slice.sound_end_ - (slice.end_ - cut_timer);
+						object::TimelineBarSlice newSlice(cut_timer, slice.end_, new_sound_start, slice.sound_end_ , latest_slice_id, bar.isWall());
+
+
 						const_cast<object::TimelineBarSlice&>(slice).end_ = cut_timer;
+						const_cast<object::TimelineBarSlice&>(slice).sound_end_ = const_cast<object::TimelineBarSlice&>(slice).sound_start_ + (slice.start_ - cut_timer);
 						bar.addSlice(newSlice);
 						return;
 					}

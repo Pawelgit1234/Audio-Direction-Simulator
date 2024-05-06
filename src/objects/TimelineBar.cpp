@@ -13,7 +13,7 @@ namespace ads
 			time_text_.setCharacterSize(settings::FONT_SIZE);
 			time_text_.setFillColor(settings::FONT_COLOR);
 
-			TimelineBarSlice slice(start, end, first_slice_id, is_wall);
+			TimelineBarSlice slice(start, end, start, end, first_slice_id, is_wall);
 			slices_.emplace_back(slice);
 		}
 
@@ -27,8 +27,8 @@ namespace ads
 			return durationSeconds * settings::BAR_SCALE_FACTOR;
 		}
 
-		TimelineBarSlice::TimelineBarSlice(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short id, bool is_wall)
-			: start_(start), end_(end), id_(id)
+		TimelineBarSlice::TimelineBarSlice(const utils::TimelineTimer& start, const utils::TimelineTimer& end, const utils::TimelineTimer& sound_start, const utils::TimelineTimer& sound_end, unsigned short id, bool is_wall)
+			: start_(start), end_(end), id_(id), sound_start_(sound_start), sound_end_(sound_end)
 		{
 			rect_.setSize(sf::Vector2f(calculateWidth(), settings::TIMELINE_BAR_HEIGHT));
 			rect_.setPosition(0.f, settings::TIMELINE_BAR_HEIGHT);

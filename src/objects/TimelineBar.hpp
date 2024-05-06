@@ -16,12 +16,14 @@ namespace ads
 		{
 			utils::TimelineTimer start_;
 			utils::TimelineTimer end_;
+			utils::TimelineTimer sound_start_;
+			utils::TimelineTimer sound_end_;
 			unsigned short id_;
 			sf::RectangleShape rect_;
 
 			float calculateWidth();
 
-			TimelineBarSlice(const utils::TimelineTimer& start, const utils::TimelineTimer& end, unsigned short id, bool is_wall);
+			TimelineBarSlice(const utils::TimelineTimer& start, const utils::TimelineTimer& end, const utils::TimelineTimer& sound_start, const utils::TimelineTimer& sound_end, unsigned short id, bool is_wall);
 		};
 
 		class TimelineBar

@@ -15,5 +15,6 @@ namespace ads
 		sf::Vector2f rayIntersectsWall(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::RectangleShape& wall);
 		sf::Vector2f rayIntersectsCircle(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDirection, const sf::CircleShape& circle);
 		float distance(const sf::Vector2f& p1, const sf::Vector2f& p2);
+		bool endsWith(const std::string& fullString, const std::string& ending);
 	}
 }

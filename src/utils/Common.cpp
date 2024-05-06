@@ -94,5 +94,12 @@ namespace ads
             float dy = p2.y - p1.y;
             return std::sqrt(dx * dx + dy * dy);
         }
+
+        bool endsWith(const std::string& fullString, const std::string& ending)
+        {
+            if (fullString.length() >= ending.length())
+                return (fullString.compare(fullString.length() - ending.length(), ending.length(), ending) == 0);
+            return false;
+        }
 	}
 }

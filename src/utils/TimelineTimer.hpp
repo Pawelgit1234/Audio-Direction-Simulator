@@ -10,16 +10,20 @@ namespace ads
 	{
 		struct TimelineTimer
 		{
-            mutable int hours;
-            mutable int minutes;
-            mutable int seconds;
+			mutable int hours;
+			mutable int minutes;
+			mutable int seconds;
 
-            TimelineTimer(int h, int m, int s);
+			TimelineTimer(int h, int m, int s);
 			TimelineTimer();
 
 			std::string toString() const;
-			void convertTimeFromPosition(float pos) const;
+			void convertTimeFromPosition(float pos);
 			float convertPositionFromTime() const;
+			unsigned short getSecondsSum() const;
+
+			TimelineTimer operator+(const TimelineTimer& other) const;
+			TimelineTimer operator-(const TimelineTimer& other) const;
 		};
 	}
 }

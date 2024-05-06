@@ -52,5 +52,6 @@ namespace ads
 		extern const char* WINDOW_NAME;
 		extern const char* ICON_PATH;
 		extern const std::string FONT_PATH;
+		extern const std::string SPEAKERS_PATH;
 	}
 }

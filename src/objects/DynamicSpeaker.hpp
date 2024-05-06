@@ -25,7 +25,7 @@ namespace ads
 
 			float getX() const { return circle_.getPosition().x; }
 			float getY() const { return circle_.getPosition().y; }
-			unsigned short getSoundlevel() const { return sound_level_; }
+			unsigned short getSoundLevel() const { return sound_level_; }
 			unsigned short getRotationAngle() const { return rotation_angle_; }
 			unsigned short getSoundAngle() const { return sound_angle_; }
 			unsigned short getId() const { return id_; }
