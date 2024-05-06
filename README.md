@@ -1,4 +1,5 @@
-# Audio Direction SimulatorThis project is an Audio Direction Simulator implemented using SFML (Simple and Fast Multimedia Library). It simulates the direction of audio based on the position of speakers and obstacles within an environment.
+# Audio Direction Simulator
+This project is an Audio Direction Simulator implemented using SFML (Simple and Fast Multimedia Library). It simulates the direction of audio based on the position of speakers and obstacles within an environment.
 
 ## Features
 - Simulate audio direction based on speaker positions and obstacles.
