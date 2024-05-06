@@ -12,15 +12,15 @@ SFML library installed (version 2.5 or later)
 Building from Source
 
 Clone the repository to your local machine:
-"""bash
+```bash
 git clone https://github.com/yourusername/audi-direction-simulator.git
-"""
+```
 
 ## Usage
 Run the compiled executable:
-"""bash
+```bash
 ./audio-direction-simulator
-"""
+```
 Use the mouse to interact with the user interface:
 Left-click and drag to move speakers and obstacles.
 Use the mouse wheel to zoom in and out.
